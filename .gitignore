@@ -2,18 +2,18 @@
 backend/venv/
 backend/__pycache__/
 backend/*.pyc
-backend/db.sqlite3
+backend/.env
 backend/media/
 
-# Django
-.env
+# Database
+backend/db.sqlite3
 
 # Node
 frontend/node_modules/
 frontend/dist/
 
-# OS / Editor
-.DS_Store
-Thumbs.db
+# Editor / OS
 .vscode/
 .idea/
+.DS_Store
+Thumbs.db
