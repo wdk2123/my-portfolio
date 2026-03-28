@@ -18,6 +18,8 @@ function EditProject() {
     featured: false,
   });
 
+  const [projectImage, setProjectImage] = useState(null);
+  const [currentImage, setCurrentImage] = useState("");
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
 
@@ -36,6 +38,7 @@ function EditProject() {
             live_demo_link: project.live_demo_link || "",
             featured: project.featured || false,
           });
+          setCurrentImage(project.image_url || "");
         }
         setLoading(false);
       })
@@ -53,12 +56,38 @@ function EditProject() {
     });
   };
 
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setProjectImage(e.target.files[0]);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
 
+    const data = new FormData();
+    data.append("title", formData.title);
+    data.append("slug", formData.slug);
+    data.append("short_description", formData.short_description);
+    data.append("description", formData.description);
+    data.append("tech_stack", formData.tech_stack);
+    data.append("github_link", formData.github_link);
+    data.append("live_demo_link", formData.live_demo_link);
+    data.append("featured", formData.featured);
+
+    if (projectImage) {
+      data.append("image", projectImage);
+    }
+
     try {
-      await api.put(`projects/update/${id}/`, formData);
+      const response = await api.put(`projects/update/${id}/`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      setCurrentImage(response.data.image_url || "");
       setMessage("Project updated successfully.");
 
       setTimeout(() => {
@@ -106,6 +135,14 @@ function EditProject() {
               )}
 
               <form onSubmit={handleSubmit} className="space-y-5">
+                {currentImage && (
+                  <img
+                    src={currentImage}
+                    alt="Project"
+                    className="w-full h-64 object-cover rounded-2xl border border-slate-200"
+                  />
+                )}
+
                 <input
                   type="text"
                   name="title"
@@ -173,6 +210,18 @@ function EditProject() {
                   onChange={handleChange}
                   className="w-full border border-slate-300 rounded-xl px-4 py-3"
                 />
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    Project Image
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="w-full border border-slate-300 rounded-xl px-4 py-3"
+                  />
+                </div>
 
                 <label className="flex items-center gap-2 text-slate-700">
                   <input

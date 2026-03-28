@@ -29,7 +29,6 @@ function ProjectDetail() {
           </div>
         ) : project ? (
           <div className="max-w-4xl mx-auto">
-            {/* Back link */}
             <div className="mb-8">
               <Link
                 to="/projects"
@@ -39,7 +38,6 @@ function ProjectDetail() {
               </Link>
             </div>
 
-            {/* Header */}
             <div className="mb-10">
               <div className="mb-4">
                 {project.featured ? (
@@ -62,60 +60,69 @@ function ProjectDetail() {
               </p>
             </div>
 
-            {/* Main content card */}
-            <div className="bg-white border border-slate-200 rounded-3xl shadow-sm p-8 md:p-10">
-              <div className="mb-8">
-                <h2 className="text-2xl font-semibold text-slate-900 mb-4">
-                  Overview
-                </h2>
-                <p className="text-slate-600 leading-8 whitespace-pre-line">
-                  {project.description}
-                </p>
-              </div>
+            <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden">
+              {project.image_url && (
+                <img
+                  src={project.image_url}
+                  alt={project.title}
+                  className="w-full h-[260px] md:h-[420px] object-cover"
+                />
+              )}
 
-              <div className="mb-8">
-                <h2 className="text-2xl font-semibold text-slate-900 mb-4">
-                  Tech Stack
-                </h2>
-                <div className="flex flex-wrap gap-3">
-                  {project.tech_stack.split(",").map((tech, index) => (
-                    <span
-                      key={index}
-                      className="px-4 py-2 rounded-full bg-slate-100 text-slate-700 text-sm font-medium"
-                    >
-                      {tech.trim()}
-                    </span>
-                  ))}
+              <div className="p-8 md:p-10">
+                <div className="mb-8">
+                  <h2 className="text-2xl font-semibold text-slate-900 mb-4">
+                    Overview
+                  </h2>
+                  <p className="text-slate-600 leading-8 whitespace-pre-line">
+                    {project.description}
+                  </p>
                 </div>
-              </div>
 
-              <div>
-                <h2 className="text-2xl font-semibold text-slate-900 mb-4">
-                  Project Links
-                </h2>
+                <div className="mb-8">
+                  <h2 className="text-2xl font-semibold text-slate-900 mb-4">
+                    Tech Stack
+                  </h2>
+                  <div className="flex flex-wrap gap-3">
+                    {project.tech_stack.split(",").map((tech, index) => (
+                      <span
+                        key={index}
+                        className="px-4 py-2 rounded-full bg-slate-100 text-slate-700 text-sm font-medium"
+                      >
+                        {tech.trim()}
+                      </span>
+                    ))}
+                  </div>
+                </div>
 
-                <div className="flex flex-wrap gap-4">
-                  {project.github_link && (
-                    <a
-                      href={project.github_link}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-xl font-medium transition"
-                    >
-                      View GitHub
-                    </a>
-                  )}
+                <div>
+                  <h2 className="text-2xl font-semibold text-slate-900 mb-4">
+                    Project Links
+                  </h2>
 
-                  {project.live_demo_link && (
-                    <a
-                      href={project.live_demo_link}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-medium transition"
-                    >
-                      Live Demo
-                    </a>
-                  )}
+                  <div className="flex flex-wrap gap-4">
+                    {project.github_link && (
+                      <a
+                        href={project.github_link}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-xl font-medium transition"
+                      >
+                        View GitHub
+                      </a>
+                    )}
+
+                    {project.live_demo_link && (
+                      <a
+                        href={project.live_demo_link}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-medium transition"
+                      >
+                        Live Demo
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
